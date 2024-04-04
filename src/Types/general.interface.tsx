@@ -14,3 +14,10 @@ export interface displayTaskProps {
     taskList: taskProperties[]
     setTaskList: Function
 }
+export interface updateTaskProps {
+    showModal: boolean
+    setShowModal: Function
+    taskId: string
+    taskName: string
+    setTaskList: Function
+}

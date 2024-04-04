@@ -8,15 +8,15 @@ const AddTask = ({ task, taskList, setTask, setTaskList }: addTaskProps) => {
     }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
-        if(task !== "") {
+        if (task !== ""){
             e.preventDefault()
             setTask("")
             const dateTime = time()
-            setTaskList((): {} => {
-                return [
-                    ...taskList, 
-                    {id: crypto.randomUUID(), name: task, time: dateTime, completed: false}
-                ]
+            setTaskList(() : {} => {
+              return [
+                ...taskList,
+                {id: crypto.randomUUID(), name: task, time: dateTime, completed: false}
+              ]
             })
         }
         else {
@@ -37,7 +37,7 @@ const AddTask = ({ task, taskList, setTask, setTaskList }: addTaskProps) => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <input type='text' className='form-control taskInput' ref={addTaskInput} onChange={(e) => {setTask(e.target.value)}} />
+                <input type='text' value={task} className='form-control taskInput' ref={addTaskInput} onChange={(e) => {setTask(e.target.value)}} />
                 <input type='submit' className='btn btn-primary submitBtn' />
             </form>
         </>

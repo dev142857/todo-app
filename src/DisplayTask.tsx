@@ -5,6 +5,9 @@ import UpdateTask from './UpdateTask'
 const DisplayTask = ({ taskList, setTaskList }: displayTaskProps) => {
     const [taskFilter, setTaskFilter] = useState('all')
     const [filteredTasks, setFilteredTasks] = useState([...taskList])
+    const [showModal, setShowModal] = useState(false);
+    const [taskId, setTaskId] = useState('');
+    const [taskName, setTaskName] = useState('');
     const onClickButtonStyle = {
         backgroundColor: "#0a5fdf",
         color: "white"
@@ -24,10 +27,10 @@ const DisplayTask = ({ taskList, setTaskList }: displayTaskProps) => {
             })
         })
     }
-    
+
     const filterTaskDisplay = () => {
         switch (taskFilter) {
-            case "all": 
+            case "all":
                 setFilteredTasks([...taskList])
                 break;
             case "pending":
@@ -39,6 +42,10 @@ const DisplayTask = ({ taskList, setTaskList }: displayTaskProps) => {
             default:
                 setFilteredTasks([...taskList])
         }
+    }
+
+    const delTaskList = (id: string) => {
+        setTaskList(taskList.filter((task: taskProperties) => task.id !== id))
     }
 
     return (
@@ -58,13 +65,23 @@ const DisplayTask = ({ taskList, setTaskList }: displayTaskProps) => {
                             <div className={`taskName ${task.completed ? 'taskStrike' : ''}`}>{task.name}</div>
                         </div>
                         <div className="taskActions">
-                            <button className="btn btn-dark editButton">Edit</button>
-                            <button className="btn btn-dark deleteButton">Delete</button>
+                            <button className="btn btn-dark editButton" onClick={() => {
+                                setShowModal(true)
+                                setTaskName(task.name)
+                                setTaskId(task.id)
+                            }}>
+                                Edit
+                            </button>
+                            <button className="btn btn-dark deleteButton" onClick={() => {
+                                delTaskList(task.id)
+                            }}>
+                                Delete
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
-            <UpdateTask />
+            <UpdateTask showModal={showModal} setShowModal={setShowModal} taskId={taskId} taskName={taskName} setTaskList={setTaskList} />
         </div>
     )
 }
